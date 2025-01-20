@@ -46,7 +46,9 @@ public class ProductoDAOImpl implements ProductoDAO {
                 (rs, rowNum) -> new Producto(rs.getInt("codigo")
                         ,rs.getString("nombre")
                         ,rs.getDouble("precio")
-                        ,rs.getInt("id_fabricante")));
+                        ,rs.getInt("id_fabricante"))
+        );
+
         return listProd;
 
     }
@@ -59,7 +61,9 @@ public class ProductoDAOImpl implements ProductoDAO {
                         ,(rs, rowNum) -> new Producto(rs.getInt("codigo")
                                 ,rs.getString("nombre")
                                 ,rs.getDouble("precio")
-                                ,rs.getInt("id_fabricante")), id);
+                                ,rs.getInt("id_fabricante")),
+                        id
+                );
 
         if(pro != null) return Optional.of(pro);
         else return Optional.empty();
@@ -69,9 +73,7 @@ public class ProductoDAOImpl implements ProductoDAO {
     public void update(Producto producto) {
 
         int rows = jdbcTemplate.update("UPDATE producto set nombre = ?, precio = ? WHERE codigo = ?",
-                producto.getNombre()
-                ,producto.getPrecio()
-                ,producto.getCodigo());
+                producto.getNombre(),producto.getPrecio(),producto.getCodigo());
         if(rows == 0) System.out.println("Update de producto con 0 registros actualizados");
 
     }
